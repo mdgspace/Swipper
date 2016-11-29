@@ -2,8 +2,10 @@ package mdg.sds.swipper;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +26,9 @@ public class ProgressBarHandler {
         ViewGroup layout = (ViewGroup) ((Activity) context).findViewById(android.R.id.content).getRootView();
 
         mProgressBar = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
-        mProgressBar.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
+//        mProgressBar.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
+        Drawable drawable = ((Activity) context).getResources().getDrawable(R.drawable.custom_bar);
+        mProgressBar.setProgressDrawable(drawable);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
 

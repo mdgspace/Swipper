@@ -138,6 +138,10 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("old", getWindow().getAttributes().screenBrightness + "");
                             Log.e("new", (float) (getDistance(x, y, ev) / 200) + "");
                             if (getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200) >= 0) {
+
+                                mProgressBarHandler.show((int)((getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200))*100));
+
+
                                 layout.screenBrightness = getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200);
                                 getWindow().setAttributes(layout);
                                 et.setText((Double.valueOf((getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200)) * 100).toString()));
@@ -160,24 +164,39 @@ public class MainActivity extends AppCompatActivity {
                          per=(double)currentVolume/maxVolume;
                          try {
                              if (per + (float) (getDistance(x, y, ev) / 110) < 1) {
+
+                                 mProgressBarHandler.show((int)((per+(float)(getDistance(x,y,ev)/110))*100));
                                  volper = ((float) per + (float) (getDistance(x, y, ev) / 110));
                                  et.setText(Double.valueOf(volper * 100).toString());
                                  audio.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (volper * maxVolume), 0);
+                               /*  long t=10;
+                                 Thread.currentThread().wait(t);
+                                 mProgressBarHandler.hide();*/
                              } else {
                                  audio.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (maxVolume), 0);
                                  et.setText("100");
                              }
                          }catch(java.lang.SecurityException e)
                          {
-
+/*
+                         } catch (InterruptedException e) {
+                             e.printStackTrace();*/
                          }
                      } else {
                          currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
                          per=(double)currentVolume/maxVolume;
+
                          if (per- (float) (getDistance(x, y, ev) / 110) >0) {
+                             mProgressBarHandler.show((int)((per-(float)(getDistance(x,y,ev)/110))*100));
                              volper = ((float)per- (float) (getDistance(x, y, ev) / 110));
                              et.setText(Double.valueOf(volper * 100).toString());
                              audio.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (volper * maxVolume), 0);
+
+                            /* long t=10;
+                             Thread.currentThread().wait(t);
+                             mProgressBarHandler.hide();*/
+
+
                          } else {
                              audio.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
                              et.setText("0");
@@ -187,7 +206,9 @@ public class MainActivity extends AppCompatActivity {
              }catch(IllegalArgumentException e)
              {
 
-             }
+             }/* catch (InterruptedException e) {
+                 e.printStackTrace();
+             }*/
                 break;
             }
 
