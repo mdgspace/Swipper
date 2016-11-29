@@ -169,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                                  volper = ((float) per + (float) (getDistance(x, y, ev) / 110));
                                  et.setText(Double.valueOf(volper * 100).toString());
                                  audio.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (volper * maxVolume), 0);
+                                 mProgressBarHandler.hide();
                                /*  long t=10;
                                  Thread.currentThread().wait(t);
                                  mProgressBarHandler.hide();*/
@@ -191,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                              volper = ((float)per- (float) (getDistance(x, y, ev) / 110));
                              et.setText(Double.valueOf(volper * 100).toString());
                              audio.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (volper * maxVolume), 0);
-
+                             mProgressBarHandler.hide();
                             /* long t=10;
                              Thread.currentThread().wait(t);
                              mProgressBarHandler.hide();*/

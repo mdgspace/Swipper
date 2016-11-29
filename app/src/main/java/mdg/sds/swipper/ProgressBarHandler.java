@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,8 @@ public class ProgressBarHandler {
         ViewGroup layout = (ViewGroup) ((Activity) context).findViewById(android.R.id.content).getRootView();
 
         mProgressBar = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
+        mProgressBar.setScaleX(0.7f);
+        mProgressBar.setScaleY(10);
 //        mProgressBar.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
         Drawable drawable = ((Activity) context).getResources().getDrawable(R.drawable.custom_bar);
         mProgressBar.setProgressDrawable(drawable);
@@ -45,9 +48,11 @@ public class ProgressBarHandler {
     public void show(int n) {
         mProgressBar.setProgress(n);
         mProgressBar.setVisibility(View.VISIBLE);
+
     }
 
     public void hide() {
+        Log.e("pi","hide");
         mProgressBar.setVisibility(View.INVISIBLE);
     }
 }
