@@ -32,7 +32,6 @@ public class ProgressBarHandler {
 //        mProgressBar.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
         Drawable drawable = ((Activity) context).getResources().getDrawable(R.drawable.custom_bar);
         mProgressBar.setProgressDrawable(drawable);
-
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
 
         RelativeLayout rl = new RelativeLayout(context);
@@ -41,6 +40,8 @@ public class ProgressBarHandler {
         rl.addView(mProgressBar);
 
         layout.addView(rl, params);
+        ViewGroup.MarginLayoutParams params1 = (ViewGroup.MarginLayoutParams)mProgressBar.getLayoutParams();
+        mProgressBar.requestLayout();
 
         hide();
     }

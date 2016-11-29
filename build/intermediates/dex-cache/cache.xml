@@ -3,75 +3,21 @@
 
     <item
         is-multidex="false"
-        jar="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
-        <dex dex="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/pre-dexed/debug/com.android.support-support-compat-24.2.1_a8863650c8e080c7225d346750e07888d6781e94.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
-        <dex dex="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-ui-24.2.1_e11582e9059583a37a95dd473fdd17fca1ca66ed.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
-        <dex dex="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/pre-dexed/debug/com.android.support-support-media-compat-24.2.1_0b8a46f47b79da7e64425b7c04d34a11168b1118.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
-        <dex dex="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-24.2.1_0daa5b2b2041e37bc6689eba2ebaa27d2ece20bf.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/exploded-aar/com.android.support/design/24.2.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="e03f47f3d1017a093bb3239d4ec47c3447f40744">
-        <dex dex="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/pre-dexed/debug/com.android.support-design-24.2.1_6de5d43b8c7634ede2870a83b92187c540a8f85f.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/libs/internal_impl-24.2.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
-        <dex dex="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.1_7a630ee0f879e67c5e904f1f778bb761d7210a5f.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.2.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-24.2.1_b614143d39d1c9f705ab8f51fb03939d44e261a9.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.0"
         sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
         <dex dex="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.1_364a8f137ccc300070d508ee8259c943a697b88a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/pre-dexed/debug/com.android.support-support-compat-24.2.1_a8863650c8e080c7225d346750e07888d6781e94.jar" />
     </item>
     <item
         is-multidex="false"
@@ -129,12 +75,66 @@
     </item>
     <item
         is-multidex="false"
+        jar="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-ui-24.2.1_e11582e9059583a37a95dd473fdd17fca1ca66ed.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.0"
         sha1="d5c731fc64c03dfe04d51134955b483551c35849">
         <dex dex="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-24.2.1_507b17a9f24e80ccb5d4b0659e337fb0e0c35ac1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
+        <dex dex="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/pre-dexed/debug/com.android.support-support-media-compat-24.2.1_0b8a46f47b79da7e64425b7c04d34a11168b1118.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-24.2.1_0daa5b2b2041e37bc6689eba2ebaa27d2ece20bf.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/exploded-aar/com.android.support/design/24.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e03f47f3d1017a093bb3239d4ec47c3447f40744">
+        <dex dex="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/pre-dexed/debug/com.android.support-design-24.2.1_6de5d43b8c7634ede2870a83b92187c540a8f85f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.1_7a630ee0f879e67c5e904f1f778bb761d7210a5f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/pulkit/AndroidStudioProjects/Swipper/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-24.2.1_b614143d39d1c9f705ab8f51fb03939d44e261a9.jar" />
     </item>
     <item
         is-multidex="false"

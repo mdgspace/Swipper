@@ -40,13 +40,15 @@ public class MainActivity extends AppCompatActivity {
     int currentVolume;
     float volper;
     double per;
-     ProgressBarHandler mProgressBarHandler;
+     CustomView cv;
+    ProgressBarHandler mProgressBarHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
 
         mProgressBarHandler = new ProgressBarHandler(this);
+        cv=new CustomView(this);
 //        super.onCreate(savedInstanceState);
 /*        setContentView((new RelativeLayout(this) {
             private int value = 0;
@@ -121,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("old", getWindow().getAttributes().screenBrightness + "");
                             Log.e("new", (float) (getDistance(x, y, ev) / 200) + "");
                             if (getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200) <= 1) {
+
 
                                 mProgressBarHandler.show((int)((getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200))*100));
 
