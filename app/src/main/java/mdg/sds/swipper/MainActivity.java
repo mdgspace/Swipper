@@ -42,13 +42,15 @@ public class MainActivity extends AppCompatActivity {
     double per;
      CustomView cv;
     ProgressBarHandler mProgressBarHandler;
+    CircularSeekBar csk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
 
-        mProgressBarHandler = new ProgressBarHandler(this);
-        cv=new CustomView(this);
+       // mProgressBarHandler = new ProgressBarHandler(this);
+       // cv=new CustomView(this);
+
 //        super.onCreate(savedInstanceState);
 /*        setContentView((new RelativeLayout(this) {
             private int value = 0;
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         }));*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        csk=new CircularSeekBar(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         et=(EditText)findViewById(R.id.editText);
@@ -124,8 +127,8 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("new", (float) (getDistance(x, y, ev) / 200) + "");
                             if (getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200) <= 1) {
 
-                                cv.show();
-                                cv.setProgress((int)((getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200))*100));
+                                //cv.show();
+                               // cv.setProgress((int)((getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200))*100));
 //                                cv.hide();
 
                                 layout.screenBrightness = getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200);
@@ -143,8 +146,8 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("new", (float) (getDistance(x, y, ev) / 200) + "");
                             if (getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200) >= 0) {
 
-                             cv.show();
-                             cv.setProgress((int)((getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200))*100));
+                            // cv.show();
+                            // cv.setProgress((int)((getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200))*100));
 //                             cv.hide();
 
                                 layout.screenBrightness = getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200);
@@ -169,8 +172,9 @@ public class MainActivity extends AppCompatActivity {
                          per=(double)currentVolume/maxVolume;
                          try {
                              if (per + (float) (getDistance(x, y, ev) / 110) < 1) {
-                                    cv.show();
-                                 cv.setProgress((int)((per+(float)(getDistance(x,y,ev)/110))*100));
+
+                                   // cv.show();
+                                 //cv.setProgress((int)((per+(float)(getDistance(x,y,ev)/110))*100));
 //                                 cv.hide();
 //                                 mProgressBarHandler.show((int)((per+(float)(getDistance(x,y,ev)/110))*100));
                                  volper = ((float) per + (float) (getDistance(x, y, ev) / 110));
@@ -194,8 +198,8 @@ public class MainActivity extends AppCompatActivity {
 
                          if (per- (float) (getDistance(x, y, ev) / 110) >0) {
 
-                             cv.show();
-                            cv.setProgress((int)((per-(float)(getDistance(x,y,ev)/110))*100));
+                           //  cv.show();
+                          //  cv.setProgress((int)((per-(float)(getDistance(x,y,ev)/110))*100));
 //                             cv.hide();
                              volper = ((float)per- (float) (getDistance(x, y, ev) / 110));
                              et.setText(Double.valueOf(volper * 100).toString());

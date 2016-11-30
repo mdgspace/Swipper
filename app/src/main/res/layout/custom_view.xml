@@ -5,10 +5,10 @@
     android:background="#000000">
 
     <TextView
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView2"
-        android:text="pulkkt"
+        android:text="pulkkfffffffffffffffffffft"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -17,12 +17,11 @@
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/custom_bar"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:layout_width="30dp"
+        android:maxHeight="10dp"
+        android:maxWidth="10dp"
         android:layout_height="30dp"
         android:id="@+id/progressBar2"
-        android:progress="100"
         android:layout_marginLeft="20dp"
         android:layout_alignBottom="@+id/textView2" />
 </RelativeLayout>

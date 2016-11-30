@@ -32,8 +32,7 @@ public class CustomView  {
         v.getBackground().setAlpha(100);
         p=(ProgressBar) v.findViewById(R.id.progressBar2);
         p.setScaleX(0.5f);
-        p.setScaleY(6);
-//        p.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
+        p.setScaleY(3);
         p.setProgress(100);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         params.leftMargin=100;
