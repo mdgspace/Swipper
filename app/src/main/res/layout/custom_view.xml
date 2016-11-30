@@ -13,4 +13,24 @@
         android:layout_alignParentEnd="true"
         android:layout_marginRight="47dp"
         android:layout_marginEnd="47dp" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_above="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/progressBar2"
+        android:progress="100"/>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_alignRight="@+id/textView2"
+        android:layout_alignEnd="@+id/textView2"
+        android:layout_marginTop="12dp"
+        android:id="@+id/progressBar3" />
+
 </RelativeLayout>

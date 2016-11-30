@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
  * Created by pulkit on 29/11/16.
  */
 
-public class ProgressBarHandler {
+public class ProgressBarHandler{
     private ProgressBar mProgressBar;
     private Context mContext;
 
