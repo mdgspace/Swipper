@@ -124,8 +124,9 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("new", (float) (getDistance(x, y, ev) / 200) + "");
                             if (getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200) <= 1) {
 
-
-                                mProgressBarHandler.show((int)((getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200))*100));
+                                cv.show();
+                                cv.setProgress((int)((getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200))*100));
+//                                cv.hide();
 
                                 layout.screenBrightness = getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200);
                                 getWindow().setAttributes(layout);
@@ -142,8 +143,9 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("new", (float) (getDistance(x, y, ev) / 200) + "");
                             if (getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200) >= 0) {
 
-                                mProgressBarHandler.show((int)((getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200))*100));
-
+                             cv.show();
+                             cv.setProgress((int)((getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200))*100));
+//                             cv.hide();
 
                                 layout.screenBrightness = getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200);
                                 getWindow().setAttributes(layout);
@@ -167,15 +169,15 @@ public class MainActivity extends AppCompatActivity {
                          per=(double)currentVolume/maxVolume;
                          try {
                              if (per + (float) (getDistance(x, y, ev) / 110) < 1) {
-
-                                 mProgressBarHandler.show((int)((per+(float)(getDistance(x,y,ev)/110))*100));
+                                    cv.show();
+                                 cv.setProgress((int)((per+(float)(getDistance(x,y,ev)/110))*100));
+//                                 cv.hide();
+//                                 mProgressBarHandler.show((int)((per+(float)(getDistance(x,y,ev)/110))*100));
                                  volper = ((float) per + (float) (getDistance(x, y, ev) / 110));
                                  et.setText(Double.valueOf(volper * 100).toString());
                                  audio.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (volper * maxVolume), 0);
-                                 mProgressBarHandler.hide();
-                               /*  long t=10;
-                                 Thread.currentThread().wait(t);
-                                 mProgressBarHandler.hide();*/
+//                                 mProgressBarHandler.hide();
+
                              } else {
                                  audio.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (maxVolume), 0);
                                  et.setText("100");
@@ -191,11 +193,14 @@ public class MainActivity extends AppCompatActivity {
                          per=(double)currentVolume/maxVolume;
 
                          if (per- (float) (getDistance(x, y, ev) / 110) >0) {
-                             mProgressBarHandler.show((int)((per-(float)(getDistance(x,y,ev)/110))*100));
+
+                             cv.show();
+                            cv.setProgress((int)((per-(float)(getDistance(x,y,ev)/110))*100));
+//                             cv.hide();
                              volper = ((float)per- (float) (getDistance(x, y, ev) / 110));
                              et.setText(Double.valueOf(volper * 100).toString());
                              audio.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (volper * maxVolume), 0);
-                             mProgressBarHandler.hide();
+//                             mProgressBarHandler.hide();
                             /* long t=10;
                              Thread.currentThread().wait(t);
                              mProgressBarHandler.hide();*/
