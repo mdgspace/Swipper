@@ -76,17 +76,22 @@ public  class DialView extends View {
         paint.setDither(true);
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(0xFFFFFFFF);
+        paint.setColor(0xff888888);
+        paint.setAlpha(100);
         paint.setXfermode(null);
+        Paint paint1 = new Paint();
+        paint1.setDither(true);
+        paint1.setAntiAlias(true);
+        paint1.setStyle(Paint.Style.STROKE);
+        paint1.setColor(0xff888888);
+        paint1.setStrokeWidth(50);
+        paint1.setXfermode(null);
         LinearGradient linearGradient = new LinearGradient(
-                radius, 0, radius, radius, 0xFFFFFFFF, 0xFFFFFFFF, Shader.TileMode.CLAMP);
+                radius, 0, radius, radius, 0x00000000, 0x00000000, Shader.TileMode.CLAMP);
         paint.setShader(linearGradient);
         canvas.drawCircle(centerX, centerY, maxCircle * radius, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-        canvas.drawCircle(centerX, centerY, minCircle * radius, paint);
-        paint.setXfermode(null);
-        paint.setShader(null);
-       // paint.setColor(0xFFFFFFFF);
+        canvas.drawCircle(centerX, centerY, minCircle * radius, paint1);
         for (int i = 0, n =  360 / (int) stepAngle; i < n; i++) {
             double rad = Math.toRadians((int) stepAngle * i);
             int startX = (int) (centerX + minCircle * radius * Math.cos(rad));
@@ -126,7 +131,8 @@ public  class DialView extends View {
     protected void onRotate(int offset)
     {
         value+=offset;
-        Toast.makeText(getContext(),value+" ",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),value   +" ",Toast.LENGTH_SHORT).show();
+
     }
 
 }

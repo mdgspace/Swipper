@@ -32,7 +32,9 @@ import android.widget.TextView;
 
 import static android.view.MotionEvent.INVALID_POINTER_ID;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+        GestureDetector.OnGestureListener,
+        GestureDetector.OnDoubleTapListener{
     private int mActivePointerId = INVALID_POINTER_ID;
     EditText et;
     AudioManager audio;
@@ -297,6 +299,53 @@ public class MainActivity extends AppCompatActivity {
         distanceSum += Math.sqrt(dx * dx + dy * dy);
       //  Log.e("dis",distanceSum+"");
         return distanceSum;
+    }
+
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
+        Log.e("single tap","single tap");
+        return true;
+    }
+
+    @Override
+    public boolean onDoubleTap(MotionEvent motionEvent) {
+        Log.e("doble tap","single tap");
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onDown(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        return false;
     }
 /*    class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
         @Override

@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
-
 public class CustomView  {
 
     Context mContext;
