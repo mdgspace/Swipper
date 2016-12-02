@@ -13,7 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
-public  class DialView extends View {
+public abstract class DialView extends View {
 
     private float centerX;
     private float centerY;
@@ -128,11 +128,6 @@ public  class DialView extends View {
         return (float) (270 - Math.toDegrees(Math.atan2(dY, dX))) % 360 - 180;
     }
 
-    protected void onRotate(int offset)
-    {
-        value+=offset;
-        Toast.makeText(getContext(),value   +" ",Toast.LENGTH_SHORT).show();
-
-    }
+    protected abstract void onRotate(int offset);
 
 }

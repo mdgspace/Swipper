@@ -19,31 +19,40 @@ public class CircularSeekBar {
 
         Context mContext;
         DialView dv;
-        CircularSeekBar csk;
-
+        RelativeLayout rl;
+        int percent;
     public CircularSeekBar(Context context)
       {
           mContext=context;
-        dv=new DialView(mContext);
-          dv.setStepAngle(5f);
-          dv.setDiscArea(.40f, .50f);
+//         dv=new DialView(mContext);
+//          dv.setStepAngle(5f);
+//          dv.setDiscArea(.40f, .50f);
           ViewGroup layout = (ViewGroup) ((Activity) context).findViewById(android.R.id.content).getRootView();
           LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
           RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-          RelativeLayout rl = new RelativeLayout(context)
+          rl = new RelativeLayout(context)
           {
               private int value = 0;
               public TextView textView;
               {
                   addView(new DialView(getContext()) {
                       {
-                          setStepAngle(5f);
+                          setStepAngle(3f);
                           setDiscArea(.40f, .50f);
                       }
                       @Override
                       protected void onRotate(int offset) {
+                          value += offset;
+                          if(value<=100&&value>=0)
+                          {
+                              percent=value;
+                              textView.setText(String.valueOf(value));
 
-                          textView.setText(String.valueOf(value += offset));
+                          }
+                          if(value>100)
+                              value=100;
+                          if(value<0)
+                              value=0;
                       }
                   }, new RelativeLayout.LayoutParams(0, 0) {
                       {
@@ -57,6 +66,11 @@ public class CircularSeekBar {
                           setText(Integer.toString(value));
                           setTextColor(Color.BLACK);
                           setTextSize(30);
+//                          setId();
+                      }
+                      public void setText(String s)
+                      {
+
                       }
                   }, new RelativeLayout.LayoutParams(0, 0) {
                       {
@@ -67,18 +81,21 @@ public class CircularSeekBar {
                   });
               }
           };
-          rl.setGravity(Gravity.CENTER);
-          rl.addView(dv);
+//          rl.setGravity(Gravity.CENTER);
+//          rl.addView(dv);
           layout.addView(rl, params);
-         dv.requestLayout();
+//         dv.requestLayout();
       }
     public void show()
     {
-        dv.setVisibility(View.VISIBLE);
+        rl.setVisibility(View.VISIBLE);
     }
     public void hide()
     {
-        dv.setVisibility(View.INVISIBLE);
-
+        rl.setVisibility(View.INVISIBLE);
+    }
+    public int percent()
+    {
+        return  percent;
     }
 }

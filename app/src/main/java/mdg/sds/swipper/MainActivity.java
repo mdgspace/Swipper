@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements
         }));*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        csk=new CircularSeekBar(this);
+//        csk=new CircularSeekBar(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         et=(EditText)findViewById(R.id.editText);
@@ -340,6 +340,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onLongPress(MotionEvent motionEvent) {
+        Log.e("doble tap","single tap");
 
     }
 
@@ -347,28 +348,4 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
         return false;
     }
-/*    class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-                               float velocityY) {
-            try {
-                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH){
-                    return false;
-                }
-                // right to left swipe
-                if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
-                        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    Log.e("p","swipe left");
-                }
-                // left to right swipe
-                else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
-                        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    Log.e("p","swipe right");
-                }
-            } catch (Exception e) {
-
-            }
-            return false;
-        }
-    }*/
 }
