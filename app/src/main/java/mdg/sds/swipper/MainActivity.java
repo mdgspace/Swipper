@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements
         }));*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        csk=new CircularSeekBar(this);
+        csk=new CircularSeekBar(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         et=(EditText)findViewById(R.id.editText);
@@ -315,6 +315,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onDoubleTapEvent(MotionEvent motionEvent) {
+        Log.e("doble tap","single tap");
         return false;
     }
 
@@ -330,6 +331,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onSingleTapUp(MotionEvent motionEvent) {
+        Log.e("doble tap","single tap");
         return false;
     }
 
@@ -346,6 +348,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        Log.e("doble tap","single tap");
         return false;
     }
 }
