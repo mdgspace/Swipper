@@ -1,34 +1,19 @@
 package mdg.sds.swipper;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PorterDuff;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.VelocityTrackerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.VelocityTracker;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import static android.view.MotionEvent.INVALID_POINTER_ID;
 
@@ -42,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements
     int currentVolume;
     float volper;
     double per;
+    float brightness;
      CustomView cv;
     ProgressBarHandler mProgressBarHandler;
     CircularSeekBar csk;
@@ -51,7 +37,13 @@ public class MainActivity extends AppCompatActivity implements
 
 
        // mProgressBarHandler = new ProgressBarHandler(this);
-       // cv=new CustomView(this);
+        cv=new CustomView(this);
+        brightness = android.provider.Settings.System.getFloat(getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS,-1);
+        WindowManager.LayoutParams layout = getWindow().getAttributes();
+        layout.screenBrightness = brightness/255;
+        getWindow().setAttributes(layout);
+        cv.setProgress((int)((brightness/255)*100));
+
 
 //        super.onCreate(savedInstanceState);
 /*        setContentView((new RelativeLayout(this) {
@@ -92,13 +84,23 @@ public class MainActivity extends AppCompatActivity implements
         }));*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        csk=new CircularSeekBar(this);
+    //    csk=new CircularSeekBar(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         et=(EditText)findViewById(R.id.editText);
         audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
         maxVolume = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+    }
+
+    public void ok(View v)
+    {
+        /*WindowManager.LayoutParams layout = getWindow().getAttributes();
+        layout.screenBrightness = getWindow().getAttributes().screenBrightness ;
+        getWindow().setAttributes(layout);*/
+        float curBrightnessValue = android.provider.Settings.System.getFloat(getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS,-1);
+
+        Log.e("brightness",curBrightnessValue/255+"");
     }
 
 
@@ -129,9 +131,9 @@ public class MainActivity extends AppCompatActivity implements
                             Log.e("new", (float) (getDistance(x, y, ev) / 200) + "");
                             if (getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200) <= 1) {
 
-                                //cv.show();
-                               // cv.setProgress((int)((getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200))*100));
-//                                cv.hide();
+                                cv.show();
+                                cv.setProgress((int)((getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200))*100));
+//                              cv.hide();
 
                                 layout.screenBrightness = getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200);
                                 getWindow().setAttributes(layout);
@@ -148,13 +150,13 @@ public class MainActivity extends AppCompatActivity implements
                             Log.e("new", (float) (getDistance(x, y, ev) / 200) + "");
                             if (getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200) >= 0) {
 
-                            // cv.show();
-                            // cv.setProgress((int)((getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200))*100));
+                             cv.show();
+                             cv.setProgress((int)((getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200))*100));
 //                             cv.hide();
 
                                 layout.screenBrightness = getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200);
                                 getWindow().setAttributes(layout);
-                                et.setText((Double.valueOf((getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200)) * 100).toString()));
+                                et.setText((Double.valueOf((getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200)) * 100).toString()));
                             } else {
                                 layout.screenBrightness = 0;
                                 getWindow().setAttributes(layout);
@@ -175,8 +177,8 @@ public class MainActivity extends AppCompatActivity implements
                          try {
                              if (per + (float) (getDistance(x, y, ev) / 110) < 1) {
 
-                                   // cv.show();
-                                 //cv.setProgress((int)((per+(float)(getDistance(x,y,ev)/110))*100));
+                                    cv.show();
+                                 cv.setProgress((int)((per+(float)(getDistance(x,y,ev)/110))*100));
 //                                 cv.hide();
 //                                 mProgressBarHandler.show((int)((per+(float)(getDistance(x,y,ev)/110))*100));
                                  volper = ((float) per + (float) (getDistance(x, y, ev) / 110));
@@ -200,8 +202,8 @@ public class MainActivity extends AppCompatActivity implements
 
                          if (per- (float) (getDistance(x, y, ev) / 110) >0) {
 
-                           //  cv.show();
-                          //  cv.setProgress((int)((per-(float)(getDistance(x,y,ev)/110))*100));
+                             cv.show();
+                            cv.setProgress((int)((per-(float)(getDistance(x,y,ev)/110))*100));
 //                             cv.hide();
                              volper = ((float)per- (float) (getDistance(x, y, ev) / 110));
                              et.setText(Double.valueOf(volper * 100).toString());

@@ -27,12 +27,11 @@ public class CustomView  {
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         v = inflater.inflate(R.layout.custom_view, null);
         v.setScaleY(8);
-        v.setScaleX(0.8f);
+        v.setScaleX(0.7f);
         v.getBackground().setAlpha(100);
         p=(ProgressBar) v.findViewById(R.id.progressBar2);
-        p.setScaleX(0.5f);
-        p.setScaleY(3);
-        p.setProgress(100);
+//        p.setScaleX(0.5f);
+//        p.setScaleY(3);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         params.leftMargin=100;
         params.bottomMargin=10;
