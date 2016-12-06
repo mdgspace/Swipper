@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import static android.R.attr.radius;
+import static android.R.attr.start;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
@@ -28,7 +29,10 @@ public abstract class DialView extends View {
     private float minCircle;
     private float maxCircle;
     private float stepAngle;
+    private float startAngle=0;
+    private float deltaAngle=0;
     private float radius;
+    private int offsetSum=0;
     public Paint paint2;
     public Canvas can;
     private static final float CIRCLE_LIMIT = 359.9999f;
@@ -41,7 +45,6 @@ public abstract class DialView extends View {
         stepAngle = 1;
         paint2=new Paint();
         setOnTouchListener(new OnTouchListener() {
-            private float startAngle;
             private boolean isDragging;
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -56,12 +59,15 @@ public abstract class DialView extends View {
                         if (isDragging) {
                             Log.e("pul","rotate");
                             float touchAngle = touchAngle(touchX, touchY);
-                            float deltaAngle = (360 + touchAngle - startAngle + 180) % 360 - 180;
+                             deltaAngle = (360 + touchAngle - startAngle + 180) % 360 - 180;
                             if (Math.abs(deltaAngle) > stepAngle) {
-                                drawArcSegment(centerX+5f,centerY+10f,(minCircle-.07f)*radius,(maxCircle-0.03f)*radius,startAngle,10f,paint2,paint2);
+                                final Canvas canvas=can;
+                                //drawArcSegment(canvas,centerX+5f,centerY+10f,(minCircle-.07f)*radius,(maxCircle-0.03f)*radius,startAngle,10f,paint2,paint2);
                                 int offset = (int) deltaAngle / (int) stepAngle;
+                                offsetSum+=offset;
                                 startAngle = touchAngle;
                                 onRotate(offset);
+                                invalidate();
                             }
                         }
                         break;
@@ -119,7 +125,7 @@ public abstract class DialView extends View {
             canvas.drawLine(startX, startY, stopX, stopY, paint);
       }*/
             Paint p = new Paint();
-            drawArcSegment(centerX, centerY, (minCircle - .07f) * radius, (maxCircle - 0.03f) * radius, 0, 10f, p, p);
+            drawArcSegment(can,centerX, centerY, (minCircle - .07f) * radius, (maxCircle - 0.03f) * radius, 0,0+offsetSum*stepAngle, p, p);
             super.onDraw(canvas);
 
     }
@@ -156,7 +162,7 @@ public abstract class DialView extends View {
 
 
 
-    public void drawArcSegment( float cx, float cy, float rInn, float rOut, float startAngle,
+    public void drawArcSegment(Canvas can, float cx, float cy, float rInn, float rOut, float startAngle,
                                       float sweepAngle, Paint fill, Paint stroke) {
         Log.e("pulkit","in arc segment");
         if (sweepAngle > CIRCLE_LIMIT) {
@@ -177,11 +183,14 @@ public abstract class DialView extends View {
         double end = toRadians(startAngle + sweepAngle);
         segmentPath.lineTo((float)(cx + rInn * cos(end)), (float)(cy + rInn * sin(end)));
         segmentPath.arcTo(innerRect, startAngle + sweepAngle, -sweepAngle);
+        Log.e("pulkit","pulkit");
         if (fill != null) {
             can.drawPath(segmentPath, fill);
+            Log.e("pulkit","pulkit");
         }
         if (stroke != null) {
             can.drawPath(segmentPath, stroke);
+            Log.e("pulkit","pulkit");
         }
     }
 
