@@ -37,12 +37,12 @@ public class MainActivity extends AppCompatActivity implements
 
 
         // mProgressBarHandler = new ProgressBarHandler(this);
- /*       cv = new CustomView(this);
+      //cv = new CustomView(this);
         brightness = android.provider.Settings.System.getFloat(getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, -1);
         WindowManager.LayoutParams layout = getWindow().getAttributes();
         layout.screenBrightness = brightness / 255;
         getWindow().setAttributes(layout);
-        cv.setProgress((int) ((brightness / 255) * 100));
+      /*  cv.setProgress((int) ((brightness / 255) * 100));
         CustomView.tv.setText(Integer.valueOf((int)((brightness/255) * 100)).toString()+"%");*/
 
 
@@ -93,16 +93,6 @@ public class MainActivity extends AppCompatActivity implements
         currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
         maxVolume = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
     }
-
-    public void ok(View v) {
-        /*WindowManager.LayoutParams layout = getWindow().getAttributes();
-        layout.screenBrightness = getWindow().getAttributes().screenBrightness ;
-        getWindow().setAttributes(layout);*/
-        float curBrightnessValue = android.provider.Settings.System.getFloat(getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, -1);
-
-        Log.e("brightness", curBrightnessValue / 255 + "");
-    }
-
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
@@ -261,7 +251,17 @@ public class MainActivity extends AppCompatActivity implements
         }
         return true;
     }
-
+    public void setBrightness(float percentBrightness)
+    {
+        WindowManager.LayoutParams layout = getWindow().getAttributes();
+        layout.screenBrightness = percentBrightness;
+        getWindow().setAttributes(layout);
+    }
+    public  float getBrightnessPercent()
+    {
+        brightness = android.provider.Settings.System.getFloat(getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, -1);
+        return getWindow().getAttributes().screenBrightness;
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

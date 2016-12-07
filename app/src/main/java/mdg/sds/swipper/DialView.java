@@ -29,23 +29,26 @@ public abstract class DialView extends View {
     private float minCircle;
     private float maxCircle;
     private float stepAngle;
-    private float startAngle=0;
-    private float deltaAngle=0;
+    private float deltaAngle = 0;
     private float radius;
-    private int offsetSum=0;
+    private float modifiedtouchAngle;
+    private float lastAngle = 0;
+    private int offsetSum = 0;
     public Paint paint2;
     public Canvas can;
     private static final float CIRCLE_LIMIT = 359.9999f;
-    public int value=0;
-    int c=0;
+    public int value = 0;
+    int c = 0;
 
 
     public DialView(Context context) {
         super(context);
         stepAngle = 1;
-        paint2=new Paint();
+        paint2 = new Paint();
         setOnTouchListener(new OnTouchListener() {
             private boolean isDragging;
+            private float startAngle = 0;
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 float touchX = event.getX();
@@ -57,17 +60,24 @@ public abstract class DialView extends View {
                         break;
                     case MotionEvent.ACTION_MOVE:
                         if (isDragging) {
-                            Log.e("pul","rotate");
+                            Log.e("pul", "rotate");
                             float touchAngle = touchAngle(touchX, touchY);
-                             deltaAngle = (360 + touchAngle - startAngle + 180) % 360 - 180;
-                            if (Math.abs(deltaAngle) > stepAngle) {
-                                final Canvas canvas=can;
-                                //drawArcSegment(canvas,centerX+5f,centerY+10f,(minCircle-.07f)*radius,(maxCircle-0.03f)*radius,startAngle,10f,paint2,paint2);
-                                int offset = (int) deltaAngle / (int) stepAngle;
-                                offsetSum+=offset;
-                                startAngle = touchAngle;
-                                onRotate(offset);
-                                invalidate();
+                            if(touchAngle>=0&&touchAngle<=180)
+                                modifiedtouchAngle=touchAngle;
+                            else
+                                modifiedtouchAngle=360+touchAngle;
+                            Log.e("touchangle", touchAngle + "");
+                            if(modifiedtouchAngle>=lastAngle-20&&modifiedtouchAngle<=lastAngle+20) {
+                                deltaAngle = (360 + touchAngle - startAngle + 180) % 360 - 180;
+                                Log.e("delta angle", deltaAngle + "");
+                                if (Math.abs(deltaAngle) > stepAngle) {
+                                    int offset = (int) (deltaAngle / stepAngle);
+                                    offsetSum += offset;
+                                    startAngle = touchAngle;
+                                    lastAngle = offsetSum * 3.6f;
+                                    onRotate(offset);
+                                    invalidate();
+                                }
                             }
                         }
                         break;
@@ -92,46 +102,27 @@ public abstract class DialView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
 
-            Log.e("o", "in draw");
-            can = canvas;
-            radius = Math.min(getMeasuredWidth(), getMeasuredHeight()) / 2f;
-            Paint paint = new Paint();
-            paint.setDither(true);
-            paint.setAntiAlias(true);
-            paint.setStyle(Paint.Style.FILL);
-            paint.setColor(0xff888888);
-            paint.setAlpha(100);
-            paint.setXfermode(null);
-            Paint paint1 = new Paint();
-            paint1.setDither(true);
-            paint1.setAntiAlias(true);
-            paint1.setStyle(Paint.Style.STROKE);
-            paint1.setColor(0xff888888);
-            paint1.setStrokeWidth(50);
-            paint1.setXfermode(null);
-            LinearGradient linearGradient = new LinearGradient(
-                    radius, 0, radius, radius, 0x00000000, 0x00000000, Shader.TileMode.CLAMP);
-            paint.setShader(linearGradient);
-            canvas.drawCircle(centerX, centerY, maxCircle * radius, paint);
+        Log.e("o", "in draw");
+        can = canvas;
+        radius = Math.min(getMeasuredWidth(), getMeasuredHeight()) / 2f;
 
-            paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-            canvas.drawCircle(centerX, centerY, minCircle * radius, paint1);
-  /*      for (int i = 0, n =  360 / (int) stepAngle; i < n; i++) {
-            double rad = Math.toRadians((int) stepAngle * i);
-            int startX = (int) (centerX + minCircle * radius * Math.cos(rad));
-            int startY = (int) (centerY + minCircle * radius * Math.sin(rad));
-            int stopX = (int) (centerX + maxCircle * radius * Math.cos(rad));
-            int stopY = (int) (centerY + maxCircle * radius * Math.sin(rad));
-            canvas.drawLine(startX, startY, stopX, stopY, paint);
-      }*/
-            Paint p = new Paint();
-            drawArcSegment(can,centerX, centerY, (minCircle - .07f) * radius, (maxCircle - 0.03f) * radius, 0,0+offsetSum*stepAngle, p, p);
-            super.onDraw(canvas);
+        Paint p2=new Paint();
+        p2.setColor(0x00000000);
+        p2.setAlpha(70);
+        canvas.drawCircle(centerX, centerY, (maxCircle+0.1f) * radius,p2);
+
+        Paint p3 = new Paint();
+        p3.setColor(0xffffffff);
+        drawArcSegment(can, centerX, centerY, (minCircle) * radius, (maxCircle) * radius, 0, 360, p3, p3);
+        Paint p = new Paint();
+        p.setColor(0xffff0000);
+        if(offsetSum>=0)
+        drawArcSegment(can, centerX, centerY, (minCircle) * radius, (maxCircle) * radius, -90,offsetSum*3.6f, p, p);
+        super.onDraw(canvas);
 
     }
-    public void setStepAngle(float angle) {/*
-        Paint p = new Paint();
-        drawArcSegment(centerX+10f, centerY+10f, (minCircle - .07f) * radius, (maxCircle - 0.03f) * radius, 0, 10f, p, p);*/
+
+    public void setStepAngle(float angle) {
         stepAngle = Math.abs(angle % 360);
     }
 
@@ -141,6 +132,7 @@ public abstract class DialView extends View {
         minCircle = Math.min(radius1, radius2);
         maxCircle = Math.max(radius1, radius2);
     }
+
     private boolean isInDiscArea(float touchX, float touchY) {
         float dX2 = (float) Math.pow(centerX - touchX, 2);
         float dY2 = (float) Math.pow(centerY - touchY, 2);
@@ -160,11 +152,9 @@ public abstract class DialView extends View {
     protected abstract void onRotate(int offset);
 
 
-
-
     public void drawArcSegment(Canvas can, float cx, float cy, float rInn, float rOut, float startAngle,
-                                      float sweepAngle, Paint fill, Paint stroke) {
-        Log.e("pulkit","in arc segment");
+                               float sweepAngle, Paint fill, Paint stroke) {
+        Log.e("pulkit", "in arc segment");
         if (sweepAngle > CIRCLE_LIMIT) {
             sweepAngle = CIRCLE_LIMIT;
         }
@@ -177,21 +167,29 @@ public abstract class DialView extends View {
 
         Path segmentPath = new Path();
         double start = toRadians(startAngle);
-        segmentPath.moveTo((float)(cx + rInn * cos(start)), (float)(cy + rInn * sin(start)));
-        segmentPath.lineTo((float)(cx + rOut * cos(start)), (float)(cy + rOut * sin(start)));
+        segmentPath.moveTo((float) (cx + rInn * cos(start)), (float) (cy + rInn * sin(start)));
+        segmentPath.lineTo((float) (cx + rOut * cos(start)), (float) (cy + rOut * sin(start)));
         segmentPath.arcTo(outerRect, startAngle, sweepAngle);
         double end = toRadians(startAngle + sweepAngle);
-        segmentPath.lineTo((float)(cx + rInn * cos(end)), (float)(cy + rInn * sin(end)));
+        segmentPath.lineTo((float) (cx + rInn * cos(end)), (float) (cy + rInn * sin(end)));
         segmentPath.arcTo(innerRect, startAngle + sweepAngle, -sweepAngle);
-        Log.e("pulkit","pulkit");
+        Log.e("pulkit", "pulkit");
         if (fill != null) {
             can.drawPath(segmentPath, fill);
-            Log.e("pulkit","pulkit");
+            Log.e("pulkit", "pulkit");
         }
         if (stroke != null) {
             can.drawPath(segmentPath, stroke);
-            Log.e("pulkit","pulkit");
+            Log.e("pulkit", "pulkit");
         }
+    }
+    public void setLastAngle(float lastangle)
+    {
+        lastAngle=lastangle;
+        offsetSum=(int)(lastangle/stepAngle);
+      /*  Paint p = new Paint();
+        p.setColor(0xffff0000);
+        drawArcSegment(can, centerX, centerY, (minCircle) * radius, (maxCircle) * radius, -90,lastangle, p, p);*/
     }
 
 }
