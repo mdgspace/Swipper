@@ -43,7 +43,7 @@ public class CustomView {
         rl.addView(v);
         layout.addView(rl, params);
         v.requestLayout();
-//        v.setVisibility(View.INVISIBLE);
+        v.setVisibility(View.INVISIBLE);
     }
 
     public void setProgress(int n) {

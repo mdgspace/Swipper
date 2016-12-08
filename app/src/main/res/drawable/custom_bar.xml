@@ -20,8 +20,8 @@
             android:gravity="bottom">
             <shape>
                 <gradient
-                    android:startColor="#007A00"
-                    android:centerColor="#007A00"
+                    android:startColor="#FB5B0A"
+                    android:centerColor="#FB5B0A"
                     android:centerY="1.0"
                     android:endColor="#06101d"
                     android:angle="270"

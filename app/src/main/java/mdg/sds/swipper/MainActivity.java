@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
         // mProgressBarHandler = new ProgressBarHandler(this);
-      //cv = new CustomView(this);
+       // cv = new CustomView(this);
         brightness = android.provider.Settings.System.getFloat(getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, -1);
         WindowManager.LayoutParams layout = getWindow().getAttributes();
         layout.screenBrightness = brightness / 255;

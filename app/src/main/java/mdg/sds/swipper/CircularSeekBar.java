@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 public class CircularSeekBar {
 
-        Context mContext;
+        final Context mContext;
         RelativeLayout rl;
         int percent;
         float brightness;
@@ -43,9 +43,9 @@ public class CircularSeekBar {
                           Log.e("last Angle",(android.provider.Settings.System.getFloat(getContext().getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, -1)/255)*360+"");
                           brightness = android.provider.Settings.System.getFloat(getContext().getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, -1);
                          // textView.setText(String.valueOf(value));
-                       /*   WindowManager.LayoutParams layout = getContext().getWindow().getAttributes();
+                          WindowManager.LayoutParams layout = ((Activity) mContext).getWindow().getAttributes();
                           layout.screenBrightness = brightness / 255;
-                          getWindow().setAttributes(layout);*/
+                          ((Activity) mContext).getWindow().setAttributes(layout);
                       }
                       @Override
                       protected void onRotate(int offset) {
@@ -53,11 +53,10 @@ public class CircularSeekBar {
                           if(value<=100&&value>=0)
                           {
                               percent=value;
-                              textView.setText(String.valueOf(value));
-                            /*  WindowManager.LayoutParams layout = getWindow().getAttributes();
-                              layout.screenBrightness = value/100;
-                              getWindow().setAttributes(layout);*/
-
+                              textView.setText(String.valueOf(value)+"%");
+                              WindowManager.LayoutParams layout = ((Activity) mContext).getWindow().getAttributes();
+                              layout.screenBrightness =(float)((double)value/(double)100);
+                              ((Activity) mContext).getWindow().setAttributes(layout);
                           }
                           if(value>100)
                               value=100;
@@ -73,13 +72,9 @@ public class CircularSeekBar {
                   });
                   addView(textView = new TextView(getContext()) {
                       {
-                          setText(Integer.toString(value));
-                          setTextColor(Color.WHITE);
+                          setText(Integer.toString(value)+"%");
+                          setTextColor(Color.BLACK);
                           setTextSize(30);
-                      }
-                      public void setText(String s)
-                      {
-
                       }
                   }, new RelativeLayout.LayoutParams(0, 0) {
                       {
