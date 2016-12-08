@@ -85,6 +85,7 @@ public class CircularSeekBar {
                   });
               }
           };
+          rl.setVisibility(View.INVISIBLE);
           layout.addView(rl, params);
       }
     public void show()
