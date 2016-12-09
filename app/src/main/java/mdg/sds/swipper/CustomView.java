@@ -21,7 +21,8 @@ public class CustomView {
     Context mContext;
     View v;
     ProgressBar p;
-     public static TextView tv;
+    private TextView tv;
+    private TextView title;
 
     public CustomView(Context context) {
         mContext = context;
@@ -33,8 +34,7 @@ public class CustomView {
         v.getBackground().setAlpha(100);
         p = (ProgressBar) v.findViewById(R.id.progressBar);
         tv=(TextView)v.findViewById(R.id.textView2);
-//        p.setScaleX(0.5f);
-//        p.setScaleY(3);
+        title=(TextView)v.findViewById(R.id.textView);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         params.leftMargin = 100;
         params.bottomMargin = 10;
@@ -57,6 +57,14 @@ public class CustomView {
     public void hide() {
         v.setVisibility(View.INVISIBLE);
 
+    }
+    public void setTitle(String s)
+    {
+        title.setText(s);
+    }
+    public void setProgressText(String s)
+    {
+        tv.setText(s);
     }
 }
 

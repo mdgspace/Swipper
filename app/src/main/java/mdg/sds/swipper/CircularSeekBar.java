@@ -13,14 +13,11 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-/**
- * Created by pulkit on 1/12/16.
- */
 
 public class CircularSeekBar {
 
         final Context mContext;
-        RelativeLayout rl;
+        public static RelativeLayout rl;
         int percent;
         float brightness;
     public CircularSeekBar(Context context)
@@ -31,7 +28,7 @@ public class CircularSeekBar {
           RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
           rl = new RelativeLayout(context)
           {
-              private int value = 0;
+              private int value = (int)((android.provider.Settings.System.getFloat(getContext().getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, -1)/255)*360/3f);
               public TextView textView;
               {
                   addView(new DialView(getContext()) {
@@ -42,7 +39,6 @@ public class CircularSeekBar {
                           value=(int)((android.provider.Settings.System.getFloat(getContext().getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, -1)/255)*360/3f);
                           Log.e("last Angle",(android.provider.Settings.System.getFloat(getContext().getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, -1)/255)*360+"");
                           brightness = android.provider.Settings.System.getFloat(getContext().getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, -1);
-                         // textView.setText(String.valueOf(value));
                           WindowManager.LayoutParams layout = ((Activity) mContext).getWindow().getAttributes();
                           layout.screenBrightness = brightness / 255;
                           ((Activity) mContext).getWindow().setAttributes(layout);
@@ -94,10 +90,18 @@ public class CircularSeekBar {
     }
     public void hide()
     {
+        Log.e("hide","hide");
         rl.setVisibility(View.INVISIBLE);
     }
     public int percent()
     {
         return  percent;
+    }
+    public boolean isVisibile()
+    {
+        if(rl.getVisibility()==View.VISIBLE)
+            return true;
+        else
+            return false;
     }
 }

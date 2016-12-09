@@ -19,7 +19,6 @@
         android:layout_marginLeft="7dp"/>
 
     <TextView
-        android:text="Brightness"
         android:paddingLeft="3dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

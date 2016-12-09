@@ -8,15 +8,12 @@ import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import static android.view.MotionEvent.INVALID_POINTER_ID;
 
@@ -26,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     AudioManager audio;
     int maxVolume;
     int currentVolume;
-    float volper;
+    double volper;
     double per;
     float brightness;
     CustomView cv;
@@ -34,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     int numberOfTaps = 0;
     long lastTapTimeMs = 0;
     long touchDownMs = 0;
-    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +40,13 @@ public class MainActivity extends AppCompatActivity {
         layout.screenBrightness = brightness / 255;
         getWindow().setAttributes(layout);
         cv.setProgress((int) ((brightness / 255) * 100));
-        CustomView.tv.setText(Integer.valueOf((int) ((brightness / 255) * 100)).toString() + "%");
+        cv.setProgressText(Integer.valueOf((int) ((brightness / 255) * 100)).toString() + "%");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         csk = new CircularSeekBar(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         et = (EditText) findViewById(R.id.editText);
-        handler = new Handler();
         audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
         maxVolume = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
@@ -65,63 +60,53 @@ public class MainActivity extends AppCompatActivity {
             case MotionEvent.ACTION_DOWN: {
 
                 touchDownMs = System.currentTimeMillis();
-
-                Log.e("pul", "down");
-                /*final float x =ev.getX();
-                final float y = ev.getY();
-                getDistance(x,y,ev);*/
                 break;
             }
 
             case MotionEvent.ACTION_MOVE: {
-                // Find the index of the active pointer and fetch its position
                 final float x = ev.getX();
                 final float y = ev.getY();
                 try {
                     if (x == ev.getHistoricalX(0, 0)) {
+                        cv.setTitle("Brightness");
                         if (y < ev.getHistoricalY(0, 0)) {
-                            Log.e("p", "in if");
                             WindowManager.LayoutParams layout = getWindow().getAttributes();
-                            Log.e("old", getWindow().getAttributes().screenBrightness + "");
-                            Log.e("new", (float) (getDistance(x, y, ev) / 200) + "");
-                            if (getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200) <= 1) {
-
+                            if (getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 270) <=1&&getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 270) >=0) {
                                 cv.show();
-                                cv.setProgress((int) ((getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200)) * 100));
-//                              cv.hide();
-
-                                layout.screenBrightness = getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200);
+                                cv.setProgress((int) ((getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 270)) * 100));
+                                layout.screenBrightness = getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 270);
                                 getWindow().setAttributes(layout);
-                                et.setText((Double.valueOf((getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200)) * 100).toString()));
-                                CustomView.tv.setText(Integer.valueOf((int) ((getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 200)) * 100)).toString() + "%");
+                                et.setText((Double.valueOf((getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 270)) * 100).toString()));
+                                cv.setProgressText(Integer.valueOf((int) ((getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 270)) * 100)).toString() + "%");
 
-                            } else {
+                            }else
+                            {
+                                cv.show();
+                                cv.setProgress(100);
                                 layout.screenBrightness = 1;
-                                et.setText("100");
-                                CustomView.tv.setText("100" + "%");
                                 getWindow().setAttributes(layout);
+                                et.setText("100");
+                                cv.setProgressText("100" + "%");
+
                             }
-                        } else {
+                        }else {
                             Log.e("p", "in else");
                             WindowManager.LayoutParams layout = getWindow().getAttributes();
-                            Log.e("old", getWindow().getAttributes().screenBrightness + "");
-                            Log.e("new", (float) (getDistance(x, y, ev) / 200) + "");
-                            if (getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200) >= 0) {
-
+                            if (getWindow().getAttributes().screenBrightness-(float)(getDistance(x, y, ev) / 270)>=0 && getWindow().getAttributes().screenBrightness-(float)(getDistance(x, y, ev) / 270)<=1) {
                                 cv.show();
-                                cv.setProgress((int) ((getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200)) * 100));
-//                              cv.hide();
-
-                                layout.screenBrightness = getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200);
+                                cv.setProgress((int) ((getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 270)) * 100));
+                                layout.screenBrightness = getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 270);
                                 getWindow().setAttributes(layout);
-                                et.setText((Double.valueOf((getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200)) * 100).toString()));
-                                CustomView.tv.setText(Integer.valueOf((int) ((getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 200)) * 100)).toString() + "%");
-
-                            } else {
+                                et.setText((Double.valueOf((getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 270)) * 100).toString()));
+                                cv.setProgressText(Integer.valueOf((int) ((getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 270)) * 100)).toString() + "%");
+                            }else
+                            {
+                                cv.show();
+                                cv.setProgress(0);
                                 layout.screenBrightness = 0;
                                 getWindow().setAttributes(layout);
                                 et.setText("0");
-                                CustomView.tv.setText("0" + "%");
+                                cv.setProgressText("0" + "%");
                             }
                         }
                     }
@@ -130,50 +115,44 @@ public class MainActivity extends AppCompatActivity {
                 }
                 try {
                     if (y == ev.getHistoricalY(0, 0)) {
+                        cv.setTitle("  Volume     ");
                         if (x > ev.getHistoricalX(0, 0)) {
+                            Log.e("in if","in if");
                             currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
-                            per = (double) currentVolume / maxVolume;
+                            Log.e("current volume",currentVolume+"");
+                            per =  (double)currentVolume /(double) maxVolume;
                             try {
-                                if (per + (float) (getDistance(x, y, ev) / 110) < 1) {
-
+                                if (per + ((double)getDistance(x, y, ev) /(double)160) < 1) {
+                                    Log.e("((double)getDistance",((double)getDistance(x, y, ev) /(double)160)+"");
                                     cv.show();
-                                    cv.setProgress((int) ((per + (float) (getDistance(x, y, ev) / 110)) * 100));
-//                                 cv.hide();
-//                                 mProgressBarHandler.show((int)((per+(float)(getDistance(x,y,ev)/110))*100));
-                                    volper = ((float) per + (float) (getDistance(x, y, ev) / 110));
-                                    et.setText(Double.valueOf(volper * 100).toString());
-                                    audio.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (volper * maxVolume), 0);
-//                                 mProgressBarHandler.hide();
-
+                                    cv.setProgress((int)((per + ((double)getDistance(x, y, ev) /(double)160)) * 100));
+                                    cv.setProgressText((int) ((per + ((double)getDistance(x, y, ev) /(double)160)) * 100)+"%");
+                                    volper = (per + ((double)getDistance(x, y, ev) /(double)160));
+                                    Log.e("volper",volper+"");
+                                    audio.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (volper * 15), 0);
+                                    Log.e("pulkit",(int) (volper * maxVolume)+" ");
                                 } else {
-                                    audio.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (maxVolume), 0);
+                                    audio.setStreamVolume(AudioManager.STREAM_MUSIC, (maxVolume), 0);
+                                    cv.setProgressText("100"+"%");
                                     et.setText("100");
                                 }
                             } catch (java.lang.SecurityException e) {
-/*
-                         } catch (InterruptedException e) {
-                             e.printStackTrace();*/
                             }
                         } else {
+                            Log.e("in else","inelse");
                             currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
+                            Log.e("current volume",currentVolume+"");
                             per = (double) currentVolume / maxVolume;
-
-                            if (per - (float) (getDistance(x, y, ev) / 110) > 0) {
-
+                            if (per - (float) (getDistance(x, y, ev) / 160) > 0) {
                                 cv.show();
-                                cv.setProgress((int) ((per - (float) (getDistance(x, y, ev) / 110)) * 100));
-//                             cv.hide();
-                                volper = ((float) per - (float) (getDistance(x, y, ev) / 110));
+                                cv.setProgress((int) ((per -((double)getDistance(x, y, ev)/(double)160)) * 100));
+                                cv.setProgressText((int) ((per - ((double)getDistance(x, y, ev) /(double)160)) * 100)+"%");
+                                volper = (per - ((double)getDistance(x, y, ev) / (double)160));
                                 et.setText(Double.valueOf(volper * 100).toString());
                                 audio.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (volper * maxVolume), 0);
-//                             mProgressBarHandler.hide();
-                            /* long t=10;
-                             Thread.currentThread().wait(t);
-                             mProgressBarHandler.hide();*/
-
-
                             } else {
                                 audio.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
+                                cv.setProgressText("0"+"%");
                                 et.setText("0");
                             }
                         }
@@ -187,12 +166,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
             case MotionEvent.ACTION_UP: {
-                Log.e("pul", "up");
-                /*final float x = ev.getX();
-                final float y = ev.getY();
-                getDistance(x,y,ev);*/
-
-                handler.removeCallbacksAndMessages(null);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        cv.hide();
+                    }
+                }, 2000);
 
                 if ((System.currentTimeMillis() - touchDownMs) > ViewConfiguration.getTapTimeout()) {
                     numberOfTaps = 0;
@@ -209,7 +189,11 @@ public class MainActivity extends AppCompatActivity {
 
                 lastTapTimeMs = System.currentTimeMillis();
                 if (numberOfTaps == 2) {
-                    csk.show();
+                    Log.e("in tap","in tap");
+                    if(csk.isVisibile())
+                    csk.hide();
+                    else
+                     csk.show();
                 }
 
 

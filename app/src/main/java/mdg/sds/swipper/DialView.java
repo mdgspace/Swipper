@@ -11,7 +11,9 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.os.Handler;
 import android.util.Log;
+import android.util.Printer;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -34,8 +36,10 @@ public abstract class DialView extends View {
     private float modifiedtouchAngle;
     private float lastAngle = 0;
     private int offsetSum = 0;
+    private Runnable delay;
     public Paint paint2;
     public Canvas can;
+    Handler handler;
     private static final float CIRCLE_LIMIT = 359.9999f;
     public int value = 0;
     int c = 0;
@@ -45,6 +49,7 @@ public abstract class DialView extends View {
         super(context);
         stepAngle = 1;
         paint2 = new Paint();
+        handler = new Handler();
         setOnTouchListener(new OnTouchListener() {
             private boolean isDragging;
             private float startAngle = 0;
@@ -57,10 +62,11 @@ public abstract class DialView extends View {
                     case MotionEvent.ACTION_DOWN:
                         startAngle = touchAngle(touchX, touchY);
                         isDragging = isInDiscArea(touchX, touchY);
+                        Log.e("in ACtion down","in Action Down");
+                        handler.removeCallbacks(delay);
                         break;
                     case MotionEvent.ACTION_MOVE:
                         if (isDragging) {
-                            Log.e("pul", "rotate");
                             float touchAngle = touchAngle(touchX, touchY);
                             if(touchAngle>=0&&touchAngle<=180)
                                 modifiedtouchAngle=touchAngle;
@@ -82,6 +88,14 @@ public abstract class DialView extends View {
                         }
                         break;
                     case MotionEvent.ACTION_UP:
+                        Log.e("in Action Up","in Action Up");
+                      handler.postDelayed(delay=new Runnable() {
+                            @Override
+                            public void run() {
+                                CircularSeekBar.rl.setVisibility(View.INVISIBLE);
+                            }
+                        }, 2000);
+                        break;
                     case MotionEvent.ACTION_CANCEL:
                         isDragging = false;
                         break;
@@ -101,8 +115,6 @@ public abstract class DialView extends View {
     @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {
-
-        Log.e("o", "in draw");
         can = canvas;
         radius = Math.min(getMeasuredWidth(), getMeasuredHeight()) / 2f;
 
@@ -138,8 +150,8 @@ public abstract class DialView extends View {
         float dY2 = (float) Math.pow(centerY - touchY, 2);
         float distToCenter = (float) Math.sqrt(dX2 + dY2);
         float baseDist = Math.min(centerX, centerY);
-        float minDistToCenter = minCircle * baseDist;
-        float maxDistToCenter = maxCircle * baseDist;
+        float minDistToCenter = minCircle * baseDist-0.2f;
+        float maxDistToCenter = maxCircle * baseDist+0.2f;
         return distToCenter >= minDistToCenter && distToCenter <= maxDistToCenter;
     }
 
@@ -154,7 +166,6 @@ public abstract class DialView extends View {
 
     public void drawArcSegment(Canvas can, float cx, float cy, float rInn, float rOut, float startAngle,
                                float sweepAngle, Paint fill, Paint stroke) {
-        Log.e("pulkit", "in arc segment");
         if (sweepAngle > CIRCLE_LIMIT) {
             sweepAngle = CIRCLE_LIMIT;
         }
@@ -173,14 +184,11 @@ public abstract class DialView extends View {
         double end = toRadians(startAngle + sweepAngle);
         segmentPath.lineTo((float) (cx + rInn * cos(end)), (float) (cy + rInn * sin(end)));
         segmentPath.arcTo(innerRect, startAngle + sweepAngle, -sweepAngle);
-        Log.e("pulkit", "pulkit");
         if (fill != null) {
             can.drawPath(segmentPath, fill);
-            Log.e("pulkit", "pulkit");
         }
         if (stroke != null) {
             can.drawPath(segmentPath, stroke);
-            Log.e("pulkit", "pulkit");
         }
     }
     public void setLastAngle(float lastangle)
