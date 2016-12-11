@@ -268,7 +268,7 @@ public class MainActivity extends Activity {
     public void BrightnessX(float y ,float Y,float d)
     {
 
-        
+        cv.setTitle("Brightness");
     }
     float getDistance(float startX, float startY, MotionEvent ev) {
         float distanceSum = 0;
