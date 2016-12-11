@@ -6,8 +6,6 @@ import android.media.AudioManager;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
@@ -25,6 +23,7 @@ public class MainActivity extends Activity {
     double volper;
     double per;
     float brightness;
+    float d;
     CustomView cv;
     CircularSeekBar csk;
     int numberOfTaps = 0;
@@ -60,17 +59,21 @@ public class MainActivity extends Activity {
             case MotionEvent.ACTION_MOVE: {
                 final float x = ev.getX();
                 final float y = ev.getY();
+                final float X= ev.getHistoricalX(0, 0);
+                final float Y=ev.getHistoricalY(0, 0);
                 try {
-                    if (x == ev.getHistoricalX(0, 0)) {
+                    if (x == ev.getHistoricalX(0, 0))
+                    {
+                        d=(getDistance(x, y, ev) / 270);
                         cv.setTitle("Brightness");
                         if (y < ev.getHistoricalY(0, 0)) {
                             WindowManager.LayoutParams layout = getWindow().getAttributes();
-                            if (getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 270) <=1 && getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 270) >=0) {
+                            if (getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 270) <=1 && getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 270) >=0)
+                            {
                                 cv.show();
                                 cv.setProgress((int) ((getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 270)) * 100));
                                 layout.screenBrightness = getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 270);
                                 getWindow().setAttributes(layout);
-                        //        et.setText((Double.valueOf((getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 270)) * 100).toString()));
                                 cv.setProgressText(Integer.valueOf((int) ((getWindow().getAttributes().screenBrightness + (float) (getDistance(x, y, ev) / 270)) * 100)).toString() + "%");
 
                             }else
@@ -79,7 +82,6 @@ public class MainActivity extends Activity {
                                 cv.setProgress(100);
                                 layout.screenBrightness = 1;
                                 getWindow().setAttributes(layout);
-                             //   et.setText("100");
                                 cv.setProgressText("100" + "%");
 
                             }
@@ -91,7 +93,6 @@ public class MainActivity extends Activity {
                                 cv.setProgress((int) ((getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 270)) * 100));
                                 layout.screenBrightness = getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 270);
                                 getWindow().setAttributes(layout);
-                             //   et.setText((Double.valueOf((getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 270)) * 100).toString()));
                                 cv.setProgressText(Integer.valueOf((int) ((getWindow().getAttributes().screenBrightness - (float) (getDistance(x, y, ev) / 270)) * 100)).toString() + "%");
                             }else
                             {
@@ -99,7 +100,6 @@ public class MainActivity extends Activity {
                                 cv.setProgress(0);
                                 layout.screenBrightness = 0;
                                 getWindow().setAttributes(layout);
-                              //  et.setText("0");
                                 cv.setProgressText("0" + "%");
                             }
                         }
@@ -128,7 +128,6 @@ public class MainActivity extends Activity {
                                 } else {
                                     audio.setStreamVolume(AudioManager.STREAM_MUSIC, (maxVolume), 0);
                                     cv.setProgressText("100"+"%");
-                                    /*et.setText("100");*/
                                 }
                             } catch (SecurityException e) {
                             }
@@ -142,12 +141,10 @@ public class MainActivity extends Activity {
                                 cv.setProgress((int) ((per -((double)getDistance(x, y, ev)/(double)160)) * 100));
                                 cv.setProgressText((int) ((per - ((double)getDistance(x, y, ev) /(double)160)) * 100)+"%");
                                 volper = (per - ((double)getDistance(x, y, ev) / (double)160));
-//                                et.setText(Double.valueOf(volper * 100).toString());
                                 audio.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (volper * maxVolume), 0);
                             } else {
                                 audio.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
                                 cv.setProgressText("0"+"%");
-//                                et.setText("0");
                             }
                         }
                     }
@@ -227,6 +224,52 @@ public class MainActivity extends Activity {
         return getWindow().getAttributes().screenBrightness;
     }
 
+    public void BrightnessY(float y ,float Y,float d)
+    {
+        cv.setTitle("Brightness");
+        if (y < Y) {
+            WindowManager.LayoutParams layout = getWindow().getAttributes();
+            if (getWindow().getAttributes().screenBrightness + d <=1 && getWindow().getAttributes().screenBrightness + d >=0)
+            {
+                cv.show();
+                cv.setProgress((int) ((getWindow().getAttributes().screenBrightness + d) * 100));
+                layout.screenBrightness = getWindow().getAttributes().screenBrightness + d;
+                getWindow().setAttributes(layout);
+                cv.setProgressText(Integer.valueOf((int) ((getWindow().getAttributes().screenBrightness + d) * 100)).toString() + "%");
+
+            }else
+            {
+                cv.show();
+                cv.setProgress(100);
+                layout.screenBrightness = 1;
+                getWindow().setAttributes(layout);
+                cv.setProgressText("100" + "%");
+
+            }
+        }else {
+            Log.e("p", "in else");
+            WindowManager.LayoutParams layout = getWindow().getAttributes();
+            if (getWindow().getAttributes().screenBrightness-d>=0 && getWindow().getAttributes().screenBrightness-d<=1) {
+                cv.show();
+                cv.setProgress((int) ((getWindow().getAttributes().screenBrightness - d) * 100));
+                layout.screenBrightness = getWindow().getAttributes().screenBrightness - d;
+                getWindow().setAttributes(layout);
+                cv.setProgressText(Integer.valueOf((int) ((getWindow().getAttributes().screenBrightness -d) * 100)).toString() + "%");
+            }else
+            {
+                cv.show();
+                cv.setProgress(0);
+                layout.screenBrightness = 0;
+                getWindow().setAttributes(layout);
+                cv.setProgressText("0" + "%");
+            }
+        }
+    }
+    public void BrightnessX(float y ,float Y,float d)
+    {
+
+        
+    }
     float getDistance(float startX, float startY, MotionEvent ev) {
         float distanceSum = 0;
         final int historySize = ev.getHistorySize();
