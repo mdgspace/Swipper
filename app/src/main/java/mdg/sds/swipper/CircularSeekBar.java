@@ -3,15 +3,14 @@ package mdg.sds.swipper;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 
 
 public class CircularSeekBar {
@@ -24,7 +23,6 @@ public class CircularSeekBar {
       {
           mContext=context;
           ViewGroup layout = (ViewGroup) ((Activity) context).findViewById(android.R.id.content).getRootView();
-          LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
           RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
           rl = new RelativeLayout(context)
           {
@@ -92,10 +90,6 @@ public class CircularSeekBar {
     {
         Log.e("hide","hide");
         rl.setVisibility(View.INVISIBLE);
-    }
-    public int percent()
-    {
-        return  percent;
     }
     public boolean isVisibile()
     {
