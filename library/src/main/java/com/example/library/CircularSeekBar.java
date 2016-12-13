@@ -65,6 +65,7 @@ public class CircularSeekBar {
                             setLastAngle(((float) currentVolume / (float) maxVolume) * 360);
                             value = (int) (((float) currentVolume / (float) maxVolume) * 360 / 3f);
                             audio.setStreamVolume(AudioManager.STREAM_MUSIC, (int) currentVolume, 0);
+
                         }
                     }
 

@@ -3,6 +3,7 @@ package com.example.library;
 import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
@@ -29,10 +30,13 @@ public class MainActivity extends Activity {
     int numberOfTaps = 0;
     long lastTapTimeMs = 0;
     long touchDownMs = 0;
+    SeekView sv;
     VideoView video;
+    float seekdistance;
 
     public void set(Context context) {
         cv = new CustomView(context);
+        sv = new SeekView(context);
         brightness = android.provider.Settings.System.getFloat(getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, -1);
         WindowManager.LayoutParams layout = getWindow().getAttributes();
         layout.screenBrightness = brightness / 255;
@@ -51,6 +55,7 @@ public class MainActivity extends Activity {
 
         switch (action) {
             case MotionEvent.ACTION_DOWN: {
+                seekdistance=0;
                 touchDownMs = System.currentTimeMillis();
                 break;
             }
@@ -58,8 +63,8 @@ public class MainActivity extends Activity {
             case MotionEvent.ACTION_MOVE: {
                 final float x = ev.getX();
                 final float y = ev.getY();
-                final float X = ev.getHistoricalX(0, 0);
-                final float Y = ev.getHistoricalY(0, 0);
+              /*  final float X = ev.getHistoricalX(0, 0);
+                final float Y = ev.getHistoricalY(0, 0);*/
                 d = getDistance(x, y, ev);
                 try {
                     if (x == ev.getHistoricalX(0, 0)) {
@@ -269,6 +274,38 @@ public class MainActivity extends Activity {
             cv.setProgressText(Integer.valueOf((int) ((getWindow().getAttributes().screenBrightness + d) * 100)).toString() + "%");
         }
 
+    }
+
+    public void seek(MediaPlayer mp,float X, float Y, float x, float y, float d, String type) {
+
+        if (type == "Y" && x == X) {
+            d = d / 2700;
+            if (y < Y) {
+                seekCommon(mp,d);
+            } else {
+                seekCommon(mp,-d);
+            }
+        } else if (type == "X" && y == Y) {
+            d = d / 1600;
+            if (x > X) {
+                seekCommon(mp,d);
+            } else {
+                seekCommon(mp,-d);
+            }
+        } else if (type == "circular") {
+
+        }
+    }
+    public void seekCommon(MediaPlayer mp,float d)
+    {
+        if (mp != null) {
+            seekdistance+=d;
+            if(mp.getCurrentPosition() + (int)d*60000*3 >0 && mp.getCurrentPosition() + (int)d*60000*3<1)
+            {
+                mp.seekTo(mp.getCurrentPosition() + (int)d*60000*3);
+                sv.setText((int)(seekdistance*60000*3)+"");
+            }
+        }
     }
 
     float getDistance(float startX, float startY, MotionEvent ev) {
