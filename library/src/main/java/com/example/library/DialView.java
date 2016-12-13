@@ -109,12 +109,6 @@ public abstract class DialView extends View {
     protected void onDraw(Canvas canvas) {
         can = canvas;
         radius = Math.min(getMeasuredWidth(), getMeasuredHeight()) / 2f;
-
-       /* Paint p2=new Paint();
-        p2.setColor(0x00000000);
-        p2.setAlpha(20);
-        canvas.drawCircle(centerX, centerY, (maxCircle+0.1f) * radius,p2);*/
-
         Paint p3 = new Paint();
         p3.setColor(0xffcccccc);
         drawArcSegment(can, centerX, centerY, (minCircle) * radius, (maxCircle) * radius, 0, 360, p3, p3);
@@ -187,9 +181,6 @@ public abstract class DialView extends View {
     {
         lastAngle=lastangle;
         offsetSum=(int)(lastangle/stepAngle);
-      /*  Paint p = new Paint();
-        p.setColor(0xffff0000);
-        drawArcSegment(can, centerX, centerY, (minCircle) * radius, (maxCircle) * radius, -90,lastangle, p, p);*/
     }
 
 }
