@@ -15,16 +15,17 @@
     </item>
 
     <!-- Define the progress properties like start color, end color etc -->
+    <!-- android:startColor="#FB5B0A"   android:centerColor="#FB5B0A"    android:endColor="#06101d"-->
     <item android:id="@android:id/progress">
         <clip android:clipOrientation="vertical"
             android:gravity="bottom">
             <shape>
                 <gradient
-                    android:startColor="#FB5B0A"
-                    android:centerColor="#FB5B0A"
                     android:centerY="1.0"
-                    android:endColor="#06101d"
                     android:angle="270"
+
+
+
                     />
             </shape>
         </clip>

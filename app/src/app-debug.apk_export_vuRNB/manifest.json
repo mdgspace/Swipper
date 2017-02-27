@@ -1,0 +1,51 @@
+{
+  "name": "__MSG_extName__",
+  "default_locale": "en",
+  "manifest_version": 2,
+  "version": "0.1",
+  "version_name": "1.0",
+  "offline_enabled": true,
+  "app": {
+    "background": {
+      "page": "app_main.html"
+    }
+  },
+  "icons": {
+    "16": "icon.png",
+    "128": "icon.png"
+  },
+  "permissions": [
+    {"fileSystem": ["write"]},
+    "unlimitedStorage",
+    "notifications",
+    "clipboardRead",
+    "accessibilityFeatures.read",
+    "https://clients2.google.com/",
+    "clipboardWrite",
+    "alarms",
+    "storage",
+    "overrideEscFullscreen",
+    "fullscreen"]
+,
+  "requirements": {
+    "3D": {
+      "features": ["webgl"]
+    }
+  },
+  "kiosk_enabled": true,
+  "import": [{"id": "mfaihdlpglflfgpfjcifdjdjcckigekc"}],
+  "file_handlers": {},
+  
+  
+  "arc_metadata": {
+    "apkList": [
+      "app-debug.apk"
+    ],
+    "enableExternalDirectory": false,
+    "formFactor": "tablet",
+    "name": "Swipper",
+    "orientation": "landscape",
+    "packageName": "mdg.sds.swipper",
+    "resize": "reconfigure"
+  }
+}
