@@ -5,6 +5,7 @@ Android Library for custom views to control brightness , volume and seek through
 <img src="https://raw.githubusercontent.com/pkarira/Swipper/19ec63a1f3833d8d12b21941bdf8bcd7fe8b62c0/library/src/main/res/drawable/finalfinal1.gif" width="250" height="400"><br><br>
 <h3>Dependency</h3>
 Add dependency to build.gradle of your app
+
 ```java
  dependencies
  {
